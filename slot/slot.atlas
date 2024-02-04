@@ -6,6 +6,10 @@ images {
   image: "/slot/Egypt Wheel/Egypt Wheel Outer.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/slot/Egypt Wheel/Egypt_Center_Pin-removebg-preview.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0
