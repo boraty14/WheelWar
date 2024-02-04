@@ -1,0 +1,7 @@
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+	local local_position = go.get_position("go1")
+	go.set("go1#sprite", "local_position",vmath.vector4(local_position.x, local_position.y, local_position.z, 1.0))
+end
