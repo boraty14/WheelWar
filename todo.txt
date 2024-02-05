@@ -1,0 +1,6 @@
+haptic -> on spin
+sound -> no prio
+vfx for skills -> 
+castle
+background
+fix rotate with quaternion

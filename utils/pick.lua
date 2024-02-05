@@ -30,11 +30,9 @@ Pick a sprite.
 -- @treturn boolean Returns `true` if the point hits inside the sprite and
 --   `false` otherwise.
 function M.pick_sprite(sprite_url, x, y, padding)
-	print(x,y)
 	local transform = go.get_world_transform(sprite_url)
 	local pos = vmath.inv(transform) * vmath.vector4(x, y, 0, 1)
 	x, y = pos.x, pos.y
-	print(x,y)
 
 	local size = go.get(sprite_url, h_size)
 	padding = padding or no_padding
@@ -42,15 +40,12 @@ function M.pick_sprite(sprite_url, x, y, padding)
 	local half_width = size.x * 0.5
 	local left = -half_width - padding.left
 	local right = half_width + padding.right
-	print(1)
 	if x < left or x > right then return false end
 
 	local half_height = size.y * 0.5
 	local top = half_height + padding.top
 	local bottom = -half_height - padding.bottom
-	print(2)
 	if y < bottom or y > top then return false end
-	print(3)
 	return true
 end
 

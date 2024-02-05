@@ -1,0 +1,21 @@
+local enemies = {}
+local create_enemy
+
+function init(self)
+	enemies["normal"] = {}
+	timer.delay(math.random(2,8), true, create_enemy)
+end
+
+function on_message(self, message_id, message, sender)	
+	if message_id == "apply_skill" then
+		for i = 1, #enemies["normal"] do
+			msg.post(enemies["normal"][i], message_id,message)
+		end
+	end
+end
+
+create_enemy = function()
+	local p = go.get_position()
+	local new_enemy_id = factory.create("#normal_enemy_factory",vmath.vector3(math.random(-400,400),p.y,p.z))
+	enemies["normal"][#enemies["normal"] + 1] = new_enemy_id
+end

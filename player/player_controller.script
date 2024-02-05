@@ -1,0 +1,22 @@
+function init(self)
+	-- Add initialization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+	self.health = 2000
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == "update_health" then
+		self.health = self.health + message.update_health
+	end
+end
+
+function on_input(self, action_id, action)
+
+end

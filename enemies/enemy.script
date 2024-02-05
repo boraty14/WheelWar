@@ -1,0 +1,69 @@
+local damage = 100
+local speed = 250
+local player_location_y = -200
+
+function init(self)
+	self.stop_duration = 0.0
+	self.poison_duration = 0.0
+	self.health = 100
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	if self.health <= 0 then
+		go.delete()
+		return nil
+	end
+	
+	if self.poison_duration > 0 then
+		self.poison_duration = self.poison_duration - dt
+		if self.poison_duration <= 0 then
+			if self.handle then
+				timer.cancel(self.handle)
+			end
+		end
+	end
+	
+	if self.stop_duration > 0 then
+		self.stop_duration = self.stop_duration - dt
+		return nil
+	end
+
+	local p = go.get_position()
+	p.y = p.y - speed * dt
+	go.set_position(p)
+	if p.y <= player_location_y then
+		-- todo play attack anim and particle
+		msg.post("/player#player_controller", "update_health",{change = -damage})
+		go.delete()
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	
+	if message_id == "apply_skill" then
+		if message.skill_index == 1 then
+			self.stop_duration = 5.0
+		elseif message.skill_index == 2 then
+			self.health = self.health - 25
+			if self.handle then
+				timer.cancel(self.handle)
+			end
+			self.handle = timer.delay(2, true, function() self.health = self.health - 25 end)
+			self.poison_duration = 6.0
+		elseif message.skill_index == 3 then
+		elseif message.skill_index == 4 then
+			self.health = self.health - 75
+			self.stop_duration = 1.0
+		elseif message.skill_index == 5 then
+			self.health = self.health - 100
+		elseif message.skill_index == 6 then
+			timer.delay(2, false, function() go.delete() end)
+		end
+	end
+end
