@@ -1,3 +1,5 @@
+require "utils.vibrator"
+
 local camera = require "orthographic.camera"
 local spin_sprite_url = msg.url("main:/slot/spin#spin_button")
 local camera_id = hash("/camera")
@@ -25,7 +27,8 @@ function on_input(self, action_id, action)
 		if is_on_sprite(self,action) then
 			self.is_pressing_spin = true
 			-- todo change with quaternion
-			go.animate(wheel_id, "euler.z", go.PLAYBACK_ONCE_FORWARD, -960, go.EASING_OUTCUBIC, 3, 0, loop_rotate)		
+			go.animate(wheel_id, "euler.z", go.PLAYBACK_ONCE_FORWARD, -960, go.EASING_OUTCUBIC, 3, 0, loop_rotate)
+			vibrator.vibrate(50,0)
 		end
 	end
 	
@@ -35,7 +38,6 @@ function on_input(self, action_id, action)
 			self.is_spinning = true
 			go.cancel_animations(wheel_id,"euler.z")
 			go.cancel_animations(wheel_id,"rotation")
-
 			local skill = math.random(1,6)
 			-- todo start conclude spinning routine
 			
@@ -50,6 +52,7 @@ function on_input(self, action_id, action)
 end
 
 loop_rotate = function()
+	vibrator.vibrate(50,0)
 	local r = go.get_rotation()
 	-- todo update to quaternion
 	--go.animate(wheel_id, "rotation", go.PLAYBACK_LOOP_PINGPONG, -958, go.EASING_INOUTSINE, 0.5, 0.1)
